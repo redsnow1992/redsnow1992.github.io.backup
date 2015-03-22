@@ -1,3 +1,8 @@
+---
+layout: document
+the design of everyday things.md
+---
+
 1. Design principles:
  * Conceptual models
  * Feedback
