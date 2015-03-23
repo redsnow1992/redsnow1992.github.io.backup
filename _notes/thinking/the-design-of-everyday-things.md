@@ -1,6 +1,6 @@
 ---
 layout: document
-title: the design of everyday things.md
+title: the design of everyday things
 ---
 
 1. Design principles:

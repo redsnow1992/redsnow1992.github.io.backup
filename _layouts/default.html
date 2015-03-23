@@ -19,6 +19,13 @@
 
   <body>
     <div class="wrapper-masthead">
+      <nav>
+        <ul>
+          {% for note in site.notes %}
+          <li><a href="{{ site.baseurl }}{{ note.url }}">{{ note.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
       <div class="container">
         <header class="masthead clearfix">
           <a href="{{ site.baseurl }}/" class="site-avatar"><img src="{{ site.avatar }}" /></a>
