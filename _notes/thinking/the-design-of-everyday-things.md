@@ -13,3 +13,4 @@ title: the design of everyday things
 3. Much of our everyday knowledge resides in the world, not in the head.
 The distinction between knowledge and information is not clear.
 4. Design for failure.
+5. The correct parts must be visible,and they must convey the correct messsage.
