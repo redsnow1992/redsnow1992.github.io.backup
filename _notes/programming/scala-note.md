@@ -79,3 +79,29 @@ object List{  // 3
 4. Patten match example
 5. Variadic function syntax
 6. Creating lists
+
+I Think out the following Code after my thought.(It works!!)
+{% highlight scala linenos %}
+def hasSubsequence[A](ls: List[A], sub: List[A]): Boolean = {
+    if(sub == Nil || ls == sub)
+      true
+    else
+      ls match {
+        case Nil => sub == Nil
+        case Cons(x, xs) => sub match {
+                              case Nil => false
+                              case Cons(y, ys) => if(x == y)
+                                                    hasSubsequence(xs, ys)
+                                                  else
+                                                    hasSubsequence(xs, sub)
+                            }
+      }
+  }
+{% endhighlight %}
+
+### Tree
+{% highlight scala %}
+sealed trait Tree[+A]
+case class Leaf[A](value: A) extends Tree[A]
+case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
+{% endhighlight %}
