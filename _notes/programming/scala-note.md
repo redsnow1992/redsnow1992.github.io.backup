@@ -15,7 +15,7 @@ transparent x .
 ### 3. run scala code
 1. scalac file.scala; scala ModuleName
 2. scala file.scala
-3. run in scala; :load file.scala; ModuleName.fu; import ModuleName._
+3. run in scala; :load file.scala; ModuleName.fn; import ModuleName._
 
 ### 4. anonymous functions
 {% highlight scala %}
@@ -105,3 +105,113 @@ sealed trait Tree[+A]
 case class Leaf[A](value: A) extends Tree[A]
 case class Branch[A](left: Tree[A], right: Tree[A]) extends Tree[A]
 {% endhighlight %}
+
+## Handling errors without exceptions
+How then do we write functional programs which handle errors? The technique is based on a simple idea: instead of throwing an exception, we return a value indicating an exceptional condition has occurred. This idea might be familiar to anyone who has used return codes in C to
+handle exceptions, although in FP it works a bit differently, as we'll see.
+
+A function is typically partial because it makes some assumptions
+about its inputs that are not implied by the input types.
+
+A function may also be partial if it does not terminate for some inputs. We aren't going to discuss
+this form of partiality here—a running program cannot recover from or detect this nontermination internally, so
+there's no question of how best to handle it.
+
+The solution is to represent explicitly in the return type that we may not always have a defined value. We can think of this as deferring to the caller for the error handling strategy. We introduce a new type, Option :
+
+{% highlight scala %}
+sealed trait Option[+A]
+case class Some[+A](get: A) extends Option[A]
+case object None extends Option[Nothing]
+
+def mean(xs: Seq[Double]): Option[Double] =
+  if (xs.isEmpty) None
+  else Some(xs.sum / xs.length)
+{% endhighlight %}
+
+You'll see Option used throughout the Scala standard library, for instance:
+
+- Map lookup for a given key returns Option
+- headOption and lastOption defined for lists and other iterables return Option containing the first or last elements of a sequence if it is nonempty.
+
+## Basic Structures
+1. List
+    
+    >
+        val l1 = List(1,2)
+        val l2 = List(3,4)
+        val l3 = l1 ::: l2   => (1, 2, 3, 4)
+        var l4 = 1 :: l2     => (1, 3, 4)
+        ::: concatenate
+        ::  cons
+
+
+    not append to lists
+
+    scala List is immutable, ruby Array is mutable.
+
+    | scala List | ruby Array |
+    | () | [], at |
+    | count | count |
+    | drop, dropRight | delete_at |
+    | exists | any? |
+    | filter | select |
+    | forall | all? |
+    | foreach | each |
+    | head | first |
+    | init | [0..-2] |
+    | isEmpty | empty? |
+    | last | last |
+    | length | length |
+    | map | map,collect |
+    | mkString | join |
+    | remove | reject |
+    | tail | [1..-1] |
+    | sort | sort |
+    | reverse | reverse |
+
+2. Tuple
+
+    tuples can contain different types of elements.
+    Tuples are very useful, for example, if you need to return multiple objects from a method.
+
+    >
+        val pair = (99, "Luftballons")
+        println(pair._1)
+        println(pair._2)
+        
+
+3. Set and Map
+
+    | scala Set | ruby Set |
+    | += | set |
+    | contains | include? |
+    | scala Map | ruby Hash |
+    | += | merge |
+    | () | [] |
+
+
+
+{% highlight scala %}
+import scala.io.Source
+  
+if (args.length > 0) {
+
+  for (line <- Source.fromFile(args(0)).getLines)
+    print(line.length +" "+ line)
+}
+else
+  Console.err.println("Please enter filename")
+{% endhighlight %}
+
+## Classes and Objects
+1. sign usage and return type
+
+    >
+        scala> def g() { "this String gets lost too" }
+        g: ()Unit
+        scala> def h() = { "this String gets returned!" }
+        h: ()java.lang.String
+2. Singleton objects
+
+    Scala is more object-oriented than Java is that classes in Scala cannot have static members. Instead, Scala has singleton objects. A singleton object definition looks like a class definition, except instead of the keyword class you use the keyword object .
