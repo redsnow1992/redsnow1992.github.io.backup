@@ -215,3 +215,33 @@ else
 2. Singleton objects
 
     Scala is more object-oriented than Java is that classes in Scala cannot have static members. Instead, Scala has singleton objects. A singleton object definition looks like a class definition, except instead of the keyword class you use the keyword object .
+
+## Basic Types and Operations
+
+raw string using `"""` like `%q[]' in ruby
+`...` like `%Q[]' in ruby
+
+    >
+        println("""Welcome to Ultamix 3000.
+                           Type "HELP" for help.""")
+        println("""|Welcome to Ultamix 3000.
+                   |Type "HELP" for help.""".stripMargin)
+
+symbol like scheme 'symbol
+
+Any method can be an operator like `+`
+
+translate -2.0 to (2.0).unary_-
+can define unary_! => !p
+but unary_* change to *.p not *p
+
+## Functional Objects
+
+
+
+
+
+
+
+
+
