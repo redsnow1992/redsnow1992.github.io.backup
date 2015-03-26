@@ -49,3 +49,44 @@ destructure parameters
 (let [[x y :as coords] [1 2 3 4 5 6]]
   (str "x: " x ", y" y ", total " (count coords)))
  => "x: 1, y2, total 6"
+
+
+
+(range start? end step?)
+(repeat n x)
+(iterate f x)
+(teke n seq)
+(cycle coll)
+(interleave & colls)
+(interpost separator coll)
+(join separator coll)
+(list & elements)
+(vector & elements)
+(hash-set & elements)
+(hash-map & elements)
+(filter pred coll)
+(take-while pred coll)
+(drop-while pred coll)
+(split-at index coll)
+(split-with pred coll)
+(every? pred coll)
+(some pred coll)
+(not-every? pred coll)
+(not-any? pred coll)
+(map f coll)
+(reduce f coll)
+(sort comp? coll)
+(sort-by a-fn comp? coll)
+(for [binding-form coll-expr filter-expr? ...] expr)
+
+(defn whole-numbers [] (iterate inc 1))
+
+
+
+
+
+
+
+
+
+
