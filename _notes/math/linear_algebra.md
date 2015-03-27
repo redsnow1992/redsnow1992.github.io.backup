@@ -9,9 +9,8 @@ title: Linear Algebra
 
 Time_use_is
 
-<span>
-$ x^2+y^2=z^2 $
-</span>
+\\( x^2+y^2=z^2 \\)
+
 
 <div>
 $$  \left\{

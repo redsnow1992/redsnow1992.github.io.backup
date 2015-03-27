@@ -3,14 +3,14 @@ layout: document
 title: Clojure Note
 ---
 ## defn, def, fn
-{% highlight clojure %}
+~~~clojure
 (defn square [x] (* x x))
 (def square (fn [x] (* x x)))
 
 vectors: [1,2,3,4]
 maps: {:foo "bar" 3 4}
 sets: #{1 2 3 4}
-{% endhighlight %}
+~~~
 
 (concat [1 2] [12 5])
 (class (/ 22 7))
@@ -82,18 +82,18 @@ destructure parameters
 (defn whole-numbers [] (iterate inc 1))
 
 
-Functions on Lists
-(peek coll)
+Functions on Lists () 
+(peek coll)    
 (pop coll)
 
-Functions on Vectors
+Functions on Vectors []
 (peek vec)
 (pop vec)
 (get vec index) <==> (vec index)
 (assoc vec index new-item)
 (subvec avec start end?)
 
-Functions on Maps
+Functions on Maps {}
 (keys map)
 (vals map)
 (get map key value-if-not found?)
@@ -102,14 +102,44 @@ Functions on Maps
 (contains? map key)
 (merge-with merge-fn & maps)
 
-Functions on Set
+Functions on Set #{}
 (union set1 set2)
 (difference set1 set2)
 (intersection set1 set2)
 (select fn set)
 
+letfn is like let but is dedicated to letting local functions.
 
+One special case of recursion that can be optimized away on the JVM is a
+self-recursion.
 
+Use `recur-function` to call function.
+
+~~~clojure
+(defn tail-fibo [n]
+  (letfn [(fib 
+    [current next n]
+    (if (zero? n)
+      current
+      (fib next (+ current next) (dec n))))]
+  (fib 0N 1N n)))
+
+(defn recur-fib [n]
+  (letfn [(fib
+    [current next n]
+    (if (zero? n)
+      current
+      (recur next (+ current next) (dec n))))]
+  (fib 0N 1N n)))
+
+(defn lazy-seq-fibo
+  ([]
+    (concat [0 1] (lazy-seq-fibo 0N 1N)))
+  ([a b]
+    (let [n (+ a b)]
+      (lazy-seq
+        (cons n (lazy-seq-fibo b n))))))
+~~~
 
 
 
