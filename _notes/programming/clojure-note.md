@@ -141,6 +141,16 @@ Use `recur-function` to call function.
         (cons n (lazy-seq-fibo b n))))))
 ~~~
 
+| Clojure                            | Ruby        |
+| (not k) 													 | not k or !k |         
+| (inc a) 													 | a += 1 |
+| (/ (+ x y) 2)           					 | (x + y) /2  |
+| (instance? java.util.List al)      | al.is_a? Array |
+| (if (not a) (inc b) (dec b))       | !a ? b+1 : b -1 |
+| (Math/pow 2 10)                    | 2 ** 10   |
+| (.someMethod someObj "foo" (.otherMethod otherObj 0)) | someObj.someMethod("foo", otherObj.otherMethod 0) |
+
+
 
 
 
