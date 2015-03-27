@@ -3,14 +3,18 @@ layout: document
 title: Linear Algebra
 ---
 # N linear equations, N unknowns
-*Row picture* 
+*Row picture*   
+*Column picture*   
+*Matric form*  
 
-*Column picture* 
+Time_use_is
 
-*Matric form* 
+<span>
+$ x^2+y^2=z^2 $
+</span>
 
-$$
-\left\{
+<div>
+$$  \left\{
   \begin{aligned}
  2x-y = 0 \\
 -x+2y = 3 \\
@@ -35,14 +39,16 @@ $$
   0 \\
   3 \\
   \end{array}
-\right]  
-$$
+\right]  $$
+</div>
 
-*column picture* (linear\_combination\_of\_cols): 
-
+*column picture* (linear_combination_of_cols): 
+<div>
 $$
 x  \left[  \begin{array}{c}   2 \\ -1 \\  \end{array} \right]
-+ y  \left[  \begin{array}{c}   -1 \\ 2 \\  \end{array} \right] = \left[  \begin{array}{c}   0 \\ 3 \\  \end{array} \right] $$
++ y  \left[  \begin{array}{c}   -1 \\ 2 \\  \end{array} \right] = \left[  \begin{array}{c}   0 \\ 3 \\  \end{array} \right] 
+$$
+</div>
 
 ## MIT linear algebra
 
@@ -51,6 +57,7 @@ x  \left[  \begin{array}{c}   2 \\ -1 \\  \end{array} \right]
 若空间中的体积满足课中提到的1～3性质，则可以确定体积为行列式的绝对值。    
 三角形(x1,y1; x2,y2; x3,y3) 行列式 
 
+<div>
 $$
 \begin{vmatrix}
 x_{1} & y_{1} & 1 \\
@@ -58,15 +65,18 @@ x_{2} & y_{2} & 1 \\
 x_{3} & y_{3} & 1 \\
 \end{vmatrix}
 $$
+</div>
 
 消元法，把点划到原点     
 以属性来确定研究的对象。    
 欧拉公式与矩阵的秩     
 
 ### MIT linear algebra 特征值与特征向量
-
-$$ \lambda * I * X = \lambda * X $$  ( $$ \lambda*I $$ 是一个矩阵, 总有特征值 $$ \lambda $$ )    
+<div>
+$$ 
+\lambda * I * X = \lambda * X $$  ( $ \lambda*I $ 是一个矩阵, 总有特征值 $ \lambda $ )    
 $$ Ax = \lambda * x   $$
+</div>
 *2014-11-13*
 
 ###  傅立叶级数，马尔科夫矩阵
@@ -76,6 +86,7 @@ $$ Ax = \lambda * x   $$
 ### 对数函数和反三角函数的导数
 在此之前先介绍了链式法则，通过该法则可以推出逆函数的导数。
 
+<div>
 $$
 \begin{align*}
 f^{-1}(f(x))=x  \\
@@ -88,38 +99,52 @@ arcsin(x)+arccos(x) = constant = pi/2
 
 \end{align*}
 $$
+</div>
 
 ### 负增长率和对数图
-$${(\frac{n!}{n^n})}^{\frac1{n}}=\frac1{e} $$  \\
-
+<div>
+$${(\frac{n!}{n^n})}^{\frac1{n}}=\frac1{e} $$  
+</div>
 #### log scale
-
+<div>
 $$
 \begin{align*}
 y=Ax^n \qquad\qquad  => logy=logA+nlogx    \qquad a\;straight\;line\; in\; logx-logy\; axis
 y=B10^{xc} \qquad\qquad => logy=logB+xc \ in base \ 10; also a\ straight\ line in x-logy\ axis
 \end{align*}
 $$
-the $$ e^x $$ is equally spaced
+</div>
+the <span> $ e^x $ </span>
+ is equally spaced
 
 #### error
 
+<div>
 $$
 \begin{align*}
 E = \frac{df}{dx} - \frac{\Delta{f}}{\Delta{x}} \approx A(\Delta{x})^n
 \end{align*}
 $$
-What is the n? \\
-n=1 \\
-if change to the following? \\
+</div>
 
+What is the n?    
+n=1     
+if change to the following?  
+
+<div>
+$$
 E = \frac{df}{dx} - \frac{f(x+\Delta{x}) - f(x-\Delta{x})} {2\Delta{x}} \approx A(\Delta{x})^n
-\]
+
 n=2 \\
+$$
+</div>
 
 ### 指数函数
-start from $$ \frac{dy}{dx} = y  $$
-$$
+start from 
+<div>$$ \frac{dy}{dx} = y  $$</div>
+
+<div>
+$$ 
 \begin{align*}
 y = 1   \\
 \frac{dy}{dx} = 1 \\
@@ -130,24 +155,30 @@ y = 1 + x + \frac{x^2}2 \\
 \ldots
 \end{align*}
 $$
+</div>
+
+<div>
+$$
 in bank, the interest computation \\
 if the  year interest ratio is 100% \\
-1 2 3 4   year..  \\
-1 2 4 8   \\
-1 $$ 1+\frac1{12} $$ $$ (1+\frac1{12})^2 $$ \\
-...  $$ (1+\frac1{n})^n $$
+1\ 2\ 3\ 4\   year..  \\
+1\ 2\ 4\ 8\   \\
+1\  1+\frac1{12}  \ (1+\frac1{12})^2  \\
+... \  (1+\frac1{n})^n 
+$$
+</div>
 
 ### 线性近似和牛顿法 
-Following the line.   \\
+Following the line.    
 Fix using derivate.    
 
-#### Linear Approximation (find $$ f(x)  $$)
-at $$ x=a $$,  $$  \frac{df}{dx}=f^{'}(a)  \approx \frac{f(x)-f(a)}{x-a}  $$ \\
-$$   f(x)\approx f(a)+(x-a)f^{'}(a)    $$  \\
-Eg. find $$  \sqrt{9.06}  $$ \\
-$$  e^{0.01} \approx 1+x+\ldots   $$  *get error order*.
+#### Linear Approximation (find <span>$ f(x)  $</span>)
+at <span>$ x=a, \\  \frac{df}{dx}=f^{'}(a)  \approx \frac{f(x)-f(a)}{x-a}, \\   f(x)\approx f(a)+(x-a)f^{'}(a)   $ </span>
+
+Eg. find <span>$  \sqrt{9.06}  \\
+$$  e^{0.01} \approx 1+x+\ldots  $</span>   *get error order*.
   
-#### Newton's Method (solve $$  F(x)=0  $$)
+#### Newton's Method (solve <span>$  F(x)=0  $</span>)
 from above: \\
 $$  \frac{-F(a)}{x-a}=F^{'}(a)    $$ \\
 $$  x-a \approx \frac{-F(a)}{f^{'}(a)}   $$ \\

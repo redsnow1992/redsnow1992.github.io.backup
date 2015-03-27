@@ -82,6 +82,34 @@ destructure parameters
 (defn whole-numbers [] (iterate inc 1))
 
 
+Functions on Lists
+(peek coll)
+(pop coll)
+
+Functions on Vectors
+(peek vec)
+(pop vec)
+(get vec index) <==> (vec index)
+(assoc vec index new-item)
+(subvec avec start end?)
+
+Functions on Maps
+(keys map)
+(vals map)
+(get map key value-if-not found?)
+(map key)
+(keyword map)
+(contains? map key)
+(merge-with merge-fn & maps)
+
+Functions on Set
+(union set1 set2)
+(difference set1 set2)
+(intersection set1 set2)
+(select fn set)
+
+
+
 
 
 
