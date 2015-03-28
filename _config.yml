@@ -60,8 +60,10 @@ collections:
 
 markdown: redcarpet
 redcarpet:
-  no_fenced_code_blocks: false
-  no_intra_emphasis: true
+  extensions: ["fenced_code_blocks", "no_intra_emphasis", "tables"]
+  # no_fenced_code_blocks: false
+  # no_intra_emphasis: true
+  # tables: true
 
 highlighter: pygments
 permalink: /:title/

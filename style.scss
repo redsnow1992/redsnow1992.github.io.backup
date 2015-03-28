@@ -266,6 +266,21 @@ nav {
   }
 }
 
+table {
+  background-color: transparent;
+  max-width: 100%;
+  thead {
+    background-color: #DDD;
+  }
+  tbody{
+    
+  }
+  th, td {
+    padding: 5px 10px ;
+    border: 1px solid #EEE ;
+  }
+}
+
 pre{
   width: auto ;
   overflow: auto ;
