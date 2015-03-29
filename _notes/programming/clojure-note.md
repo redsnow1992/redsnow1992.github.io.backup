@@ -295,6 +295,65 @@ However, such blocked promises are not locked down, and the situation can be res
 @b
 ;= 42
 ~~~
+Make callback-based APIs synchronous
+~~~clojure
+((sync-fn call-service) 8 7)
+
+((sync-fn call-service) 8 7)
+
+(defn sync-fn [async-fn]
+  (fn [& args]
+    (let [result (promise)]
+      (apply sync-fn (conj (vec args) #(deliver result &%))))
+    @result))
+
+
+(defn call-service [arg1 arg2 callback-fn]
+  (future (callback-fn (+ arg1 arg2) (- arg1 arg2))))
+~~~
+# Parallelism on the Cheap
+~~~clojure
+(defn phone-numbers [string]
+  (re-seq #"(\d{3})[\.-]?(\d{3})[\.-]?(\d{4})" string))
+
+(def files (repeat 100
+  (apply str
+    (concat (repeat 1000000 \space)
+      "Sunil: 617.555.2937, Betty: 508.555.2218"))))
+
+(time (dorun (map phone-numbers files)))  ;; "Elapsed time: 2236.505069 msecs"
+(time (dorun (pmap phone-numbers files)))  ;; "Elapsed time: 1028.172429 msecs"
+
+(def files (repeat 100000 (apply str
+  (concat (repeat 10 \space)
+    "Sunil: 617.555.2937, Betty: 508.555.2218"))))
+
+;; "Elapsed time: 154.914828 msecs"
+;; "Elapsed time: 276.043889 msecs"
+~~~
+There is often a workaround for such scenarios, however. You can often efficiently parallelize a relatively trivial operation by chunking your dataset so that each unit of parallelized work is larger. In the above example, the unit of work is just 1K of text; however, we can take steps to ensure that the unit of work is larger, so that each value processed by pmap is a seq of 250 1K strings, thus boosting the work done per future dispatch and cutting down on the parallelization overhead:
+
+~~~clojure
+(time (->> files 
+  (partition-all 250)
+  (pmap (fn [chunk] (doall (map phone-numbers chunk)))) 
+  (apply concat)
+  dorun))
+;; "Elapsed time: 114.678729 msecs"
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
