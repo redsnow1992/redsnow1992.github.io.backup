@@ -2,6 +2,19 @@
 layout: document
 title: Linear Algebra
 ---
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default">
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [['$','$'], ['\\(','\\)']],
+      displayMath: [['$$','$$'], ["\\[","\\]"]],
+      processEscapes: true
+    }
+  });
+</script>
 # N linear equations, N unknowns
 *Row picture*   
 *Column picture*   
