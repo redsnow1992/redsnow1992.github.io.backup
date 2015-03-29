@@ -2,7 +2,7 @@
 layout: document
 title: Clojure Note
 ---
-## Operation on collections and datastructures
+# Operation on collections and datastructures
 
 ~~~clojure
 (range start? end step?)
@@ -192,14 +192,12 @@ Map destructuring
 ;= "-25.4"
 ~~~
 
-## #"(?<=[a-z])(?=[A-Z])"
-
 Pure functions are cacheable and trivial to parallelize
 
 
-## Concurrency and Parallelism
+# Concurrency and Parallelism
 Shifting Computation Through Time and Space
-### Delays
+## Delays
 ~~~clojure
 (def d (delay (println "Running...") :done!))
 ;= #'user/d (deref d)
@@ -233,7 +231,7 @@ A protential usage scenario  of Delay:
 ;= true
 ~~~
 
-### Futures
+## Futures
 A Clojure future evaluates a body of code in another thread:
 
 ~~~clojure
@@ -249,7 +247,7 @@ A Clojure future evaluates a body of code in another thread:
 	:impatient!)
 ~~~
 
-### Promises
+## Promises
 
 ~~~clojure
 (def p (promise))
