@@ -232,7 +232,7 @@ A protential usage scenario  of Delay:
 ~~~
 
 ## Futures
-A Clojure future evaluates a body of code in another thread:
+A Clojure future evaluates a body of code in **another** thread:
 
 ~~~clojure
 (def long-calculation (future (apply + (range 1e8))))
@@ -342,13 +342,36 @@ There is often a workaround for such scenarios, however. You can often efficient
 ;; "Elapsed time: 114.678729 msecs"
 ~~~
 
+## Clojure References Types
+Identities are represented in Clojure using four reference types: `var`s, `ref`s, `agent`s, and `atom`s.              
+All references always contain some value (even if that value is nil ); accessing one is
+always done using deref or @.               
+One critical guarantee of deref within the context of Clojure’s reference types is that
+deref will never block, regardless of the change semantics of the reference type being
+dereferenced or the operations being applied to it in other threads of execution.
 
+all references types have `watches` and `validators`.
 
+### Coordination
+A `coordinated` operation is one where multiple actors **must cooperate**
+(or, at a minimum, be properly sequestered so as to not interfere with each other) in
+order to yield **correct** results.
 
+In contrast, an `uncoordinated` operation is one where multiple actors **cannot impact**
+each other negatively because their contexts are separated. For example, two different
+threads of execution can safely write to two different files on disk with no possibility
+of interfering with each other.
 
+### Synchronization
+`Synchronous` operations are those where the caller’s thread of
+execution waits or blocks or sleeps until it may have exclusive access to a given context,
+whereas `asynchronous` operations are those that can be started or scheduled without
+blocking the initiating thread of execution.
 
-
-
+|  | coordinated | uncoordinated |
+| ---- | ---: | ---: |
+| synchronization | refs | atoms |
+| asynchronization |  | agents |
 
 
 
