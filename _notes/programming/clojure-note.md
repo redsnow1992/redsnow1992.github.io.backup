@@ -369,10 +369,10 @@ execution waits or blocks or sleeps until it may have exclusive access to a give
 whereas `asynchronous` operations are those that can be started or scheduled without
 blocking the initiating thread of execution.
 
-|  | coordinated | uncoordinated |
-| ---- | ---: | ---: |
-| synchronization | refs | atoms |
-| asynchronization |  | agents |
+|                  | coordinated | uncoordinated |
+| ----             | ---:        | ---: |
+| synchronization  | refs        | atoms |
+| asynchronization |             | agents |
 
 **A Demonstration Utility:**
 
@@ -417,11 +417,33 @@ The behavior of swap! could be shown as following:
 ~~~
 **totally set** the value of `atom` using `compare-and-set!`:     
 `(compare-and-set! xs @xs "new value")`       
-and a more **dangerous operation** `reset!`
+and a more **dangerous operation** `reset!`.
 
+## Notifications and Constraints
+### Watches
+watchers used as logger.
 
+~~~clojure
+(def history (atom ()))
+(defn log->list [dest-atom key source old new]
+  (when (not= old new)
+    (swap! dest-atom conj new)))
+(def sarah (atom {:name "Sarah" :age 25}))
 
+(add-watch sarah :record (partial log->list history))
+~~~
+### validator
+~~~clojure
+(def n (atom 1 :validator pos?))
+(def sarah (atom {:name "Sarah" :age 25}))
+(set-validator! sarah :age)
+(set-validator! sarach #(or (:age %)
+                            (throw (IllegalStateException. "People must have `:age`s!"))))
 
+~~~
+
+## Software Transactional Memory(STM)
+In general terms, software transactional memory (STM) is any method of coordinating multiple concurrent modifications to a *shared set of storage locations*.
 
 
 

@@ -321,6 +321,10 @@ table {
   right: 20px ;
   top: 10% ;
   position: fixed ;
+  @include mobile {
+    float: none ;
+    position: static ;
+  }
 }
 /// end of toc
 
@@ -328,23 +332,24 @@ table {
 /////
 
 .scrollToTop{
-  width:100px; 
-  height:30px;
+ // width:100px; 
+ // height:30px;
   padding:10px; 
   text-align:center; 
-  background: whiteSmoke;
+  //background: whiteSmoke;
   font-weight: bold;
   color: #444;
   text-decoration: none;
   position:fixed;
-  top:90%;
+  bottom:10%;
   right:40px;
   display:none;
-  background: url('arrow_up.png') no-repeat 0px 20px;
+  background: url('/images/arrow_up.gif');
 }
 .scrollToTop:hover{
   text-decoration:none;
 }
+
 ///
 
 pre{
