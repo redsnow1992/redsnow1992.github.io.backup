@@ -362,6 +362,7 @@ each other negatively because their contexts are separated. For example, two dif
 threads of execution can safely write to two different files on disk with no possibility
 of interfering with each other.
 
+## Classifying Concurrent Operations
 ### Synchronization
 `Synchronous` operations are those where the caller’s thread of
 execution waits or blocks or sleeps until it may have exclusive access to a given context,
@@ -373,8 +374,50 @@ blocking the initiating thread of execution.
 | synchronization | refs | atoms |
 | asynchronization |  | agents |
 
+**A Demonstration Utility:**
 
+~~~clojure
+(defmacro futures [n & exprs]
+  (vec (for [_ (range n)
+             expr exprs]
+         `(future ~expr))))
 
+(defmacro wait-futures [& args]
+  `(doseq [f# (futures ~@args)]
+     @f#))
+~~~
+## Atoms
+Operations that modify the state of atoms block until the modification is complete, and each modification is isolated, there is no way to orchestrate the modification of two atoms.     
+
+~~~clojure
+(def sarah (atom {:name "Sarah" :age 25 :wears-glasses? false}))
+(swap! sarah update-in [:age] + 3)
+
+clojure.core/swap!
+([atom f] [atom f x] [atom f x y] [atom f x y & args])
+  Atomically swaps the value of atom to be:
+  (apply f current-value-of-atom args)
+~~~
+The behavior of swap! could be shown as following:
+
+~~~clojure
+(def xs (atom #{1 2 3}))
+(wait-futures 1 (swap! xs (fn [v]
+                            (Thread/sleep 250)
+                            (println "trying 4")
+                            (conj v 4)))
+              (swap! xs (fn [v]
+                          (Thread/sleep 500)
+                          (println "trying 5")
+                          (conj v 5))))
+
+; trying 4
+; trying 5
+; trying 5
+~~~
+**totally set** the value of `atom` using `compare-and-set!`:     
+`(compare-and-set! xs @xs "new value")`       
+and a more **dangerous operation** `reset!`
 
 
 
