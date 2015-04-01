@@ -194,6 +194,8 @@ Map destructuring
 
 Pure functions are cacheable and trivial to parallelize
 
+# Collections and Data Structures
+
 
 # Concurrency and Parallelism
 Shifting Computation Through Time and Space
