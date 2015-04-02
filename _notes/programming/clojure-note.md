@@ -4,6 +4,39 @@ title: Clojure Note
 ---
 # Operation on collections and datastructures
 
+## Collection
++ `conj` to add an item to a collection
++ `seq` to get a sequence of a collection
++ `count` to get the number of items of collection
++ `empty` to obtain an empty instance of the **same type** as a provided collection
++ `=` to determine value equality of a collection compared to one or more other collections 
+
+`empty` allows you to work with collections of the same type as a given **instance**. Usually used in `(into (empty coll ..) ..)`
+
+## Sequences
++ `seq` produces a sequence over its argument
++ `first`, `rest`, and `next` provide ways to consume sequences.
++ `lazy-seq` produces a *lazy sequence* that is the result of evaluating an expression. 
+
+always true: 
+
+~~~clojure
+(= (next x)
+   (seq (rest x)))
+~~~
+
+### Create seqs
+
+`cons` accepts two arguments, a value ot serve as the head of the new seq, and another collection, the seq of which will serve as its tail:   
+`(cons 0 (range 1 5))`
+`list*` is just a helper for producing seqs with any number of head values, followed by a sequence. So, these two expression are equivalent:    
+`(cons 0 (cons 1 (cons 2 (cons 3 (range 4 10)))))`       
+`(list* 0 1 2 3 (range 4 10))`
+
+### Lazy seqs
+
+
+
 ~~~clojure
 (range start? end step?)
 (repeat n x)
