@@ -35,7 +35,51 @@ always true:
 
 ### Lazy seqs
 
+~~~clojure
+(defn random-ints
+   [limit]
+   (lazy-seq
+     (cons (rand-int limit)
+	       (random-ints limit))))
+~~~
+Lazy sequences allow Clojure to transparently process big datasets that don't fit in memory and to express algorthms in a more uniform, declarative, pipelined way; in this contex, sequences can be considered *an ephemeral medium of computation*, not as colelections.
 
+~~~clojure
+(apply str (remove (set "aeiouy")
+                   "vowels are useless! or may be not ..."))
+~~~
+
+**Head retention**      
+Clojure's lazy sequences are persistent: an item is computed once, but is **still retained** by the sequence. This means that, as long as you maintain a reference to a sequence, you'll prevent its items from being garbage-collected, such can put pressure on the VM that will impact performance, potentially even causing an out of memory error if the realized portion of a sequence grows too large.
+
+~~~clojure
+(let [[t d] (split-with #(< % 12) (range 1e8))]
+  [(count d) (count t)])
+ ;; OutOfMemoryError GC overhead limit exceeded
+ ;;   java.lang.Long.valueOf
+
+;; solve the above problem
+(let [[t d] (split-with #(< % 12) (range 1e8))]
+  [(count t) (count d)])
+~~~
+
+## Associative
++ `assoc`, which establishes new associations between keys and values within the given collection
++ `dissoc`, which drops associations for given keys from collection
++ `get`, which looks up the value for a particular key in a collection
++ `contains`, which is a predicate that returns `true` only if the collection has a value associated with the given key.
+
+**vectors associate values with indices**      
+The **key** is everything, and the vector's key is index, not the seen value.     
+**to find the value associated with a key we must use `find`**     
+
+~~~clojure
+(find {:ethel nil} :lucy)  ; => nil
+(find {:ethel nil} :ethel) ; => [:ethel nil]
+
+(if-let [[k v] (find {:a 5 :b 7} :a)]
+  (format ...))
+~~~
 
 ~~~clojure
 (range start? end step?)
