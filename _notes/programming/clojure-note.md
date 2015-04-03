@@ -96,7 +96,51 @@ They are treated as a sort of degenerate map, **associating keys with themselves
 + `subseq`, which returns a seq of a collection's values that fall within a specified range of keys
 + `rsubseq` 
 
+~~~clojure
+(def sm (sorted-map :z 5 :x 9 :y 0 :b 2 :a 3 :c 4))
+(rseq sm)
+(subseq sm <= :c)
+(subseq sm > :b <= :y)
+(rsubseq sm > :b <= :y)
+~~~
 
+**sepcial**
+
+~~~clojure
+(defn magnitude
+  [x]
+  (-> x Math/log10 Math/floor))
+
+(defn compare-magnitude
+  [a b]
+  (- (magnitude a) (magnitude b)))
+
+(sorted-set-by compare-magnitude 10 1000 500)
+;= #{10 500 1000}
+(conj *1 600)
+;= #{10 500 1000}
+(disj *1 750)
+;= #{10 1000}
+(contains? *1 1239)
+;= true
+~~~
+**change the implement of `compare-magnitude` can get different result**
+
+~~~clojure
+(defn compare-magnitude
+  [a b]
+  (let [diff (- (magnitude a) (magnitude b))]
+    (if (zero? diff)
+      (compare a b)
+      diff)))
+~~~
+**Collections are function:** `([:a :b :c] 2)`     
+**Collection key are (often) functions:** `(:b {:a 5 :b 6})`     
+
+**Beware**   
+`(remove #{5 7 false} (cons false (range 10)))`   
+*change to:*   
+`(remove (partial contains? #{5 7 false}) (cons false (range 10)))`
 
 ~~~clojure
 (range start? end step?)
@@ -314,7 +358,7 @@ A protential usage scenario  of Delay:
 	:content (delay (slurp "http://www.mozilla.org/about/manifesto.en.html"))})
 ;= #'user/get-document
 (def d (get-document "some-id"))
-￼;= d ;= ;= ;= ;=
+;= d ;= ;= ;= ;=
 #'user/d
 {:url "http://www.mozilla.org/about/manifesto.en.html", :title "The Mozilla Manifesto",
 :mime "text/html",
