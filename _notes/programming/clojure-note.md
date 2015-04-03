@@ -81,6 +81,23 @@ The **key** is everything, and the vector's key is index, not the seen value.
   (format ...))
 ~~~
 
+### Stack
+Clojure doesn't have a distinct stack data structure, but is does support a stack abstraction via three operations:     
++ `conj`, for pushing a value onto the stack(conveniently reusing the collection-generalized operation)
++ `pop`, for obtaining the stack with its top value removed
++ `peek`, for obtaining the value on the top of the stack
+Bothe lists and vectors can be used as stacks.
+
+### Set
+They are treated as a sort of degenerate map, **associating keys with themselves**.
+
+### Sorted
++ `rseq`, which returns a seq of a collection's values in reverse, with the guarantee that doing so will return in constant time
++ `subseq`, which returns a seq of a collection's values that fall within a specified range of keys
++ `rsubseq` 
+
+
+
 ~~~clojure
 (range start? end step?)
 (repeat n x)
