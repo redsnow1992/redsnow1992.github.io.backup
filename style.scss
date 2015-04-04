@@ -318,9 +318,10 @@ table {
 }
 #toc-container {
   margin-bottom: 10px;
-  right: 20px ;
+  right: 10px ;
   top: 10% ;
   position: fixed ;
+  width: 19%; 
   @include mobile {
     float: none ;
     position: static ;

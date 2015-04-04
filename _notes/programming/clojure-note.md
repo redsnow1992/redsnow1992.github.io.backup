@@ -2,8 +2,7 @@
 layout: document
 title: Clojure Note
 ---
-# Operation on collections and datastructures
-
+# Collections and Data Structures
 ## Collection
 + `conj` to add an item to a collection
 + `seq` to get a sequence of a collection
@@ -332,8 +331,82 @@ Map destructuring
 
 Pure functions are cacheable and trivial to parallelize
 
-# Collections and Data Structures
+## Data Structure Types
+some of the implementation details that separate each of the concrete data structure types, most of which have to do with their construction.
 
+~~~clojure
+(group-by #(rem % 3) (range 10))
+(defn numberic?
+  [x]
+  (every? (set '012456789') x))
+
+(def orders
+  [{:product "Clock", :customer "Wile Coyote",
+    :qty 6, :total 300}
+   {:product "Dynamite", :customer "Wile Coyote",
+    :qty 20, :total 5000}
+   {:product "Shotgun", :customer "Elmer Fudd",
+    :qty 2, :total 800}
+   {:product "Shells", :customer "Elmer Fudd",
+    :qty 4, :total 100}
+   {:product "Hole", :customer "Wile Coyote",
+    :qty 1, :total 1000}
+   {:product "Anvil", :customer "Elmer Fudd",
+    :qty 2, :total 300}
+   {:product "Anvil", :customer "Wile Coyote", :qty 6, :total 900}])
+;; compute the orders of total customers
+(reduce-by :customer #(+ %1 (:total %2)) 0 orders)
+(defn reduce-by
+  [key-fn f init coll]
+  (reduce (fn [summaries x]
+            (let [k (key-fn x)]
+              (assoc summaries k (f (summaries k init) x))))
+          {} coll)
+  
+  ;; (map ((partial f) init)) (group-by key-fn coll))
+  ;; get the customers of each productor
+
+(reduce-by :product #(conj %1 (:customer %2)) #{} orders)
+;; all orders by customer
+(reduce-by :customer #(conj %1 {(:product %2) (:total %2)}) {} orders)
+~~~
+**reduce** applies on two different data type. One is accumulated value, the other is item in the coll.  
+
+## Metadata
++ Type declarations and access modifiers (like private, protected, and so on).
++ Java annotations are metadata about classes, methods, method arguments, and so on.   
+**always take the form of a map**
+
+~~~clojure
+(def a ^{:created (System/currentTimeMillis)}
+        [1 2 3])
+		(meta a) ; => {:created ...}
+
+(meta ^:private [1 2 3])
+;= {:private true}
+(meta ^:private ^:dynamic [1 2 3])
+;= {:dynamic true, :private true}
+
+(def b (with-meta a (assoc (meta a)
+:modified (System/currentTimeMillis))))
+(meta b)
+;= {:modified 1322065210115, :created 1322065198169}
+(def b (vary-meta a assoc :modified (System/currentTimeMillis))) ;= #'user/b
+~~~
+
+
+`*-in` methods accept nested keys.   
+
+~~~clojure
+(def version1 {:name "Chas" :info {:age 31}})
+(def version2 (update-in version1 [:info :age] + 3))
+~~~
+
+`assoc` adds/updates kv or kvs   
+`assoc-in` updates [k1 [k2 v]]   
+`update-in` accepts function as updator
+`get-in` gets [k1 [k2]] value   
+ 
 
 # Concurrency and Parallelism
 Shifting Computation Through Time and Space
