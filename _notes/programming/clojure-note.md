@@ -408,6 +408,121 @@ some of the implementation details that separate each of the concrete data struc
 `get-in` gets [k1 [k2]] value   
  
 
+
+# Macro
+## When to use Macros
+~~~clojure
+(defn fn-hello [x]
+  (str "hello, " x "!"))
+
+(defmacro macro-hello [x]
+  `(str "hello, " ~x "!"))
+
+(map macro-hello ["Tom" "Jack"])
+;; => CompilerException java.lang.RuntimeException: Can't take value of a macro: #'user/macro-hello, compiling:(NO_SOURCE_PATH:1:16) 
+~~~
+This latter usage of `macro-hello` breaks because we are attempting to apply the macro’s value at runtime. They functionally don’t exist at runtime,10 they can’t be composed or passed as values, and therefore it makes no sense to map a macro across a collection of values as we attempted to do above.   
+To use macros in such contexts, we would need to wrap their usage in an enclosing fn or anonymous function literal. This **brings the macro’s application back to compile time**, when the enclosing function is compiled. This will generally lead to some awkward situations where passing a function value would be far simpler and idiomatic:
+
+~~~clojure
+(map #(macro-hello %) ["Brian" "Not Brian"])
+;; => ("Hello, Brian!" "Hello, Not Brian!")
+~~~
+
+## Hygiene
+~~~clojure
+(defmacro unhygienic [& body]
+  `(let [x :oops] ~@body))
+(unhygienic (println "x:" x))
+
+;= #<CompilerException java.lang.RuntimeException:
+;= Can't let qualified name: user/x, compiling:(NO_SOURCE_PATH:1)>
+~~~
+all bare symbols are namespace-qualified within a syntax-quoted form. We can see the impact in this case if we check the expansion of our macro:
+
+~~~clojure
+(macroexpand-1 `(unhygienic (println "x:" x)))
+;= (clojure.core/let [user/x :oops]
+;= (clojure.core/println "x:" user/x))
+~~~
+
+References to `x` are expanded to `user/x`, but `let` requires that names for new bindings be **unqualified** symbols, so this macro will always yield code that emits a compilation error. We could improperly “avoid” this problem via some clever quoting and unquoting:
+
+~~~clojure
+(defmacro still-unhygienic [& body]
+  `(let [~'x :oops]
+     ~@body))
+
+(still-unhygienic (println "x:" x)) ; x: :oops
+;= nil
+
+(macroexpand-1 '(still-unhygienic
+  (println "x:" x)))
+;= (clojure.core/let [x :oops]
+;= (println "x:" x))
+~~~
+You can use gensym whenever you like if you need a unique symbol, but its primary role is in helping us write hygienic macros:
+
+~~~clojure
+(defmacro hygienic [& body]
+  (let [sym (gensym)]
+     `(let [~sym :macro-value]
+        ~@body)))
+;= #'user/hygienic
+
+(let [x :important-value]
+  (hygienic (println "x:" x)))
+; x: :important-value ;= nil
+~~~
+Any symbol ending in # inside a syntax-quote form will be expanded automatically into a gensym, and will expand to the same gensym every time it appears. This is called an **auto-gensym**.
+
+~~~clojure
+(defmacro hygienic [& body]
+`(let [x# :macro-value]
+    ~@body))
+~~~
+**The trap of auto-gensym**   
+`[`x# `x#] != `[x# x#]`
+
+~~~clojure
+(defmacro our-doto [expr & forms]
+  `(let [obj# ~expr]
+     ~@(map (fn [[f & args]]
+       `(~f obj# ~@args)) forms) obj#))
+;; there are two obj#	 
+~~~
+*change to*
+
+~~~clojure
+(defmacro our-doto2 [expr & forms]
+  (let [obj (gensym "obj")]
+    `(let [~obj ~expr]
+       ~@(map (fn [[f & args]]
+                `(~f ~obj ~@args))
+              forms)
+       ~obj)))
+~~~
+## Double Evaluation
+
+~~~clojure
+(defmacro spy [x]
+  `(do
+     (println "spied" '~x ~x) 
+     ~x))
+
+(spy (rand-int 10))
+
+;; change to
+(defmacro spy2 [x]
+  `(let [x# ~x]
+     (do
+       (println "spied " '~x x#)
+       x#)))
+~~~
+
+
+
+
 # Concurrency and Parallelism
 Shifting Computation Through Time and Space
 ## Delays
