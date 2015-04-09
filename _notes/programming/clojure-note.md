@@ -2,8 +2,7 @@
 layout: document
 title: Clojure Note
 ---
-# Operation on collections and datastructures
-
+# Collections and Data Structures
 ## Collection
 + `conj` to add an item to a collection
 + `seq` to get a sequence of a collection
@@ -332,7 +331,196 @@ Map destructuring
 
 Pure functions are cacheable and trivial to parallelize
 
-# Collections and Data Structures
+## Data Structure Types
+some of the implementation details that separate each of the concrete data structure types, most of which have to do with their construction.
+
+~~~clojure
+(group-by #(rem % 3) (range 10))
+(defn numberic?
+  [x]
+  (every? (set '012456789') x))
+
+(def orders
+  [{:product "Clock", :customer "Wile Coyote",
+    :qty 6, :total 300}
+   {:product "Dynamite", :customer "Wile Coyote",
+    :qty 20, :total 5000}
+   {:product "Shotgun", :customer "Elmer Fudd",
+    :qty 2, :total 800}
+   {:product "Shells", :customer "Elmer Fudd",
+    :qty 4, :total 100}
+   {:product "Hole", :customer "Wile Coyote",
+    :qty 1, :total 1000}
+   {:product "Anvil", :customer "Elmer Fudd",
+    :qty 2, :total 300}
+   {:product "Anvil", :customer "Wile Coyote", :qty 6, :total 900}])
+;; compute the orders of total customers
+(reduce-by :customer #(+ %1 (:total %2)) 0 orders)
+(defn reduce-by
+  [key-fn f init coll]
+  (reduce (fn [summaries x]
+            (let [k (key-fn x)]
+              (assoc summaries k (f (summaries k init) x))))
+          {} coll)
+  
+  ;; (map ((partial f) init)) (group-by key-fn coll))
+  ;; get the customers of each productor
+
+(reduce-by :product #(conj %1 (:customer %2)) #{} orders)
+;; all orders by customer
+(reduce-by :customer #(conj %1 {(:product %2) (:total %2)}) {} orders)
+~~~
+**reduce** applies on two different data type. One is accumulated value, the other is item in the coll.  
+
+## Metadata
++ Type declarations and access modifiers (like private, protected, and so on).
++ Java annotations are metadata about classes, methods, method arguments, and so on.   
+**always take the form of a map**
+
+~~~clojure
+(def a ^{:created (System/currentTimeMillis)}
+        [1 2 3])
+		(meta a) ; => {:created ...}
+
+(meta ^:private [1 2 3])
+;= {:private true}
+(meta ^:private ^:dynamic [1 2 3])
+;= {:dynamic true, :private true}
+
+(def b (with-meta a (assoc (meta a)
+:modified (System/currentTimeMillis))))
+(meta b)
+;= {:modified 1322065210115, :created 1322065198169}
+(def b (vary-meta a assoc :modified (System/currentTimeMillis))) ;= #'user/b
+~~~
+
+
+`*-in` methods accept nested keys.   
+
+~~~clojure
+(def version1 {:name "Chas" :info {:age 31}})
+(def version2 (update-in version1 [:info :age] + 3))
+~~~
+
+`assoc` adds/updates kv or kvs   
+`assoc-in` updates [k1 [k2 v]]   
+`update-in` accepts function as updator
+`get-in` gets [k1 [k2]] value   
+ 
+
+
+# Macro
+## When to use Macros
+~~~clojure
+(defn fn-hello [x]
+  (str "hello, " x "!"))
+
+(defmacro macro-hello [x]
+  `(str "hello, " ~x "!"))
+
+(map macro-hello ["Tom" "Jack"])
+;; => CompilerException java.lang.RuntimeException: Can't take value of a macro: #'user/macro-hello, compiling:(NO_SOURCE_PATH:1:16) 
+~~~
+This latter usage of `macro-hello` breaks because we are attempting to apply the macro’s value at runtime. They functionally don’t exist at runtime,10 they can’t be composed or passed as values, and therefore it makes no sense to map a macro across a collection of values as we attempted to do above.   
+To use macros in such contexts, we would need to wrap their usage in an enclosing fn or anonymous function literal. This **brings the macro’s application back to compile time**, when the enclosing function is compiled. This will generally lead to some awkward situations where passing a function value would be far simpler and idiomatic:
+
+~~~clojure
+(map #(macro-hello %) ["Brian" "Not Brian"])
+;; => ("Hello, Brian!" "Hello, Not Brian!")
+~~~
+
+## Hygiene
+~~~clojure
+(defmacro unhygienic [& body]
+  `(let [x :oops] ~@body))
+(unhygienic (println "x:" x))
+
+;= #<CompilerException java.lang.RuntimeException:
+;= Can't let qualified name: user/x, compiling:(NO_SOURCE_PATH:1)>
+~~~
+all bare symbols are namespace-qualified within a syntax-quoted form. We can see the impact in this case if we check the expansion of our macro:
+
+~~~clojure
+(macroexpand-1 `(unhygienic (println "x:" x)))
+;= (clojure.core/let [user/x :oops]
+;= (clojure.core/println "x:" user/x))
+~~~
+
+References to `x` are expanded to `user/x`, but `let` requires that names for new bindings be **unqualified** symbols, so this macro will always yield code that emits a compilation error. We could improperly “avoid” this problem via some clever quoting and unquoting:
+
+~~~clojure
+(defmacro still-unhygienic [& body]
+  `(let [~'x :oops]
+     ~@body))
+
+(still-unhygienic (println "x:" x)) ; x: :oops
+;= nil
+
+(macroexpand-1 '(still-unhygienic
+  (println "x:" x)))
+;= (clojure.core/let [x :oops]
+;= (println "x:" x))
+~~~
+You can use gensym whenever you like if you need a unique symbol, but its primary role is in helping us write hygienic macros:
+
+~~~clojure
+(defmacro hygienic [& body]
+  (let [sym (gensym)]
+     `(let [~sym :macro-value]
+        ~@body)))
+;= #'user/hygienic
+
+(let [x :important-value]
+  (hygienic (println "x:" x)))
+; x: :important-value ;= nil
+~~~
+Any symbol ending in # inside a syntax-quote form will be expanded automatically into a gensym, and will expand to the same gensym every time it appears. This is called an **auto-gensym**.
+
+~~~clojure
+(defmacro hygienic [& body]
+`(let [x# :macro-value]
+    ~@body))
+~~~
+**The trap of auto-gensym**   
+`[`x# `x#] != `[x# x#]`
+
+~~~clojure
+(defmacro our-doto [expr & forms]
+  `(let [obj# ~expr]
+     ~@(map (fn [[f & args]]
+       `(~f obj# ~@args)) forms) obj#))
+;; there are two obj#	 
+~~~
+*change to*
+
+~~~clojure
+(defmacro our-doto2 [expr & forms]
+  (let [obj (gensym "obj")]
+    `(let [~obj ~expr]
+       ~@(map (fn [[f & args]]
+                `(~f ~obj ~@args))
+              forms)
+       ~obj)))
+~~~
+## Double Evaluation
+
+~~~clojure
+(defmacro spy [x]
+  `(do
+     (println "spied" '~x ~x) 
+     ~x))
+
+(spy (rand-int 10))
+
+;; change to
+(defmacro spy2 [x]
+  `(let [x# ~x]
+     (do
+       (println "spied " '~x x#)
+       x#)))
+~~~
+
+
 
 
 # Concurrency and Parallelism
