@@ -3,7 +3,7 @@ layout: document
 title: Javascript Note
 ---
 ## 1. js judge Array
-{% highlight javascript %}
+~~~javascript
 var fruits = ["Banana", "Orange", "Apple", "Mango"];
 document.getElementById("demo").innerHTML = isArray(fruits);
 
@@ -11,10 +11,10 @@ function isArray(myArray) {
   return Object.prototype.toString.call(myArray) 
     === "[object Array]";
 }
-{% endhighlight %}
+~~~
 
 ## 2. JavaScript Closures
-~~~
+~~~javascript
 var add = (function () {
 var counter = 0;
     return function () {return counter += 1;}
@@ -29,7 +29,7 @@ JavaScript supports nested functions. Nested functions have access to the scope 
 ~~~
 
 ## 3. js operation on table
-{% highlight javascript %}
+~~~javascript
 function changeContent(id, row, cell, content) {
   var x = document.getElementById(id).rows[row].cells;
   x[cell].innerHTML = content;
@@ -46,4 +46,18 @@ function deleteRow(id,row) {
 function createCaption(id) {
   document.getElementById(id).createCaption().innerHTML = "My new caption";
 }
-{% endhighlight %}
+~~~
+
+## 4. js eval
+~~~javascript
+function check(){
+  var value = arguments[0] ;
+  for(var i = 1 ; i < arguments.length ; i++){
+	if (eval(eval(arguments[i])(value)) == false){
+   	  return false ;
+	}
+  }
+  return true ;
+}
+check(value, "non_empty", "number", "integer") ;
+~~~
