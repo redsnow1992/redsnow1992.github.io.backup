@@ -8,7 +8,7 @@ layout: default
       <h1><a href="{{ site.baseurl }}{{ note.url }}">{{ note.title }}</a></h1>
 
       <div class="entry">
-        {{ note.content | truncate: 100 }}
+        {{ note.output.excerpt }}
       </div>
 
       <a href="{{ site.baseurl }}{{ note.url }}" class="read-more">Read More</a>
