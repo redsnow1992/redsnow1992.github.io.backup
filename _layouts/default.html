@@ -19,64 +19,65 @@
     <script type="text/javascript" src="{{site.baseurl}}/js/jquery.toc.js">
     </script>
 
-    
-    <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
   </head>
 
   <body>
     <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/vendor/fastclick.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/foundation.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/foundation/foundation.magellan.min.js"></script>
 
     <div class="off-canvas-wrap" data-offcanvas>
       <div class="inner-wrap">
-  <nav class="tab-bar">
-    <section class="left-small">
-      <a href="#" class="left-off-canvas-toggle menu-icon"><span></span></a>
-    </section>
-    <section class="middle.tab-bar-section">
-      <h1>{{site.name}}</h1>
-    </section>
-  </nav>
-      </div>
-    </div>
-    <div class="wrapper-masthead">
-      <div class="doc-list">
-        <ul>
-          {% for note in site.notes %}
-          <li><a href="{{ site.baseurl }}{{ note.url }}" title="{{ note.title }}">{{ note.title | truncate: 20}}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-      <div class="container">
-        <header class="masthead clearfix">
-          <a href="{{ site.baseurl }}/" class="site-avatar"><img src="{{ site.avatar }}" /></a>
+      	<nav class="tab-bar" data-magellan-expedition="fixed">
+      	  <section class="left-small">
+      	    <a href="#" class="left-off-canvas-toggle menu-icon"><span></span></a>
+      	  </section>
 
-          <div class="site-info">
-            <h1 class="site-name"><a href="{{ site.baseurl }}/">{{ site.name }}</a></h1>
-            <p class="site-description">{{ site.description }}</p>
+      	  <section class="middle tab-bar-section">
+      	    <h1 class="title">{{site.name}}</h1>
+      	  </section>
+
+      	  <section class="right-small">
+      	    <a href="#" class="right-off-canvas-toggle.menu-icon"><span></span></a>
+      	  </section>
+      	</nav>
+
+      	<aside class="left-off-canvas-menu">
+      	  <ul class="off-canvas-list">
+      	    <li><label>Documents</label></li>
+      	    {% for note in site.notes %}
+                  <li><a href="{{ site.baseurl }}{{ note.url }}" title="{{ note.title }}">{{ note.title | truncate: 20}}</a></li>
+                  {% endfor %}
+      	  </ul>
+      	</aside>
+	
+      	<aside class="right-off-canvas-menu">
+      	  <ul class="off-canvas-list">
+            <li> <label>RSS</label></li>
+            <li><a href="http://songshuhui.net/feed">科学松鼠会</a></li>
+            <li><a href="http://www.techug.com/feed">外刊IT评论网</a></li>
+            <li><a href="http://www.jianshu.com/users/b1dd2b2c87a8/timeline">王垠</a></li>
+      	  </ul>
+      	</aside>
+
+      	<section class="main-section">
+          <div class="row">
+            <div class="small-11 small-centered columns">
+      	     {{ content }}
+            </div>
           </div>
-
-          <nav>
-            <a href="{{ site.baseurl }}/">Document</a>
-            <a href="{{ site.baseurl }}/blog">Blog</a>
-            <a href="{{ site.baseurl }}/about">About</a>
-          </nav>
-        </header>
+      	</section>
+	      <a class="exit-offcanvas"></a>
       </div>
     </div>
 
-    <div id="main" role="main" class="container">
-      <a name="top"></a>
-      {{ content }}
+    <div class="small-4 small-centered columns">
+      {% include svg-icons.html %}
     </div>
 
-    <div class="wrapper-footer">
-      <div class="container">
-        <footer class="footer">
-          {% include svg-icons.html %}
-        </footer>
-      </div>
-    </div>
+    <script type="text/javascript">
+      $(document).foundation() ;
+    </script>
 
     {% include analytics.html %}
   </body>

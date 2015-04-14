@@ -1,17 +1,10 @@
 ---
 layout: default
 ---
-
-<div class="posts">
+<div class="panel">
   {% for note in site.notes %}
-    <article class="post">
-      <h1><a href="{{ site.baseurl }}{{ note.url }}">{{ note.title }}</a></h1>
-
-      <div class="entry">
-        {{ note.output.excerpt }}
-      </div>
-
-      <a href="{{ site.baseurl }}{{ note.url }}" class="read-more">Read More</a>
-    </article>
+  <h1><a href="{{ site.baseurl }}{{ note.url }}">{{ note.title }}</a></h1>
+  {{ note.output.excerpt }}
+  <a href="{{ site.baseurl }}{{ note.url }}" class="read-more">Read More</a>
   {% endfor %}
 </div>

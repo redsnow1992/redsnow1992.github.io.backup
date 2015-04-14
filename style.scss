@@ -20,14 +20,7 @@ html {
 body {
 	background: $white;
   font: 18px/1.4 $helvetica;
-  color: $darkGray;
-}
-
-.container {
-  margin: 0 auto;
-  max-width: 740px;
-  padding: 0 10px;
-  width: 100%;
+  color: black;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -211,32 +204,6 @@ img {
   }
 }
 
-nav {
-  float: right;
-  margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
-  font-size: 18px;
-
-  @include mobile {
-    float: none;
-    margin-top: 9px;
-    display: block;
-    font-size: 16px;
-  }
-
-  a {
-    margin-left: 20px;
-    color: $darkGray;
-    text-align: right;
-    font-weight: 300;
-    letter-spacing: 1px;
-
-    @include mobile {
-      margin: 0 10px;
-      color: $blue;
-    }
-  }
-}
 
 .doc-list{
   float: left;
@@ -267,20 +234,6 @@ nav {
   }
 }
 
-table {
-  background-color: transparent;
-  max-width: 100%;
-  thead {
-    background-color: #DDD;
-  }
-  tbody{
-    
-  }
-  th, td {
-    padding: 5px 10px ;
-    border: 1px solid #EEE ;
-  }
-}
 
 /// toc
 #toc, .toc, .mw-warning {
@@ -328,75 +281,6 @@ table {
   }
 }
 /// end of toc
-
-
-/////
-
-.scrollToTop{
- // width:100px; 
- // height:30px;
-  padding:10px; 
-  text-align:center; 
-  //background: whiteSmoke;
-  font-weight: bold;
-  color: #444;
-  text-decoration: none;
-  position:fixed;
-  bottom:10%;
-  right:40px;
-  display:none;
-  background: url('/images/arrow_up.gif');
-}
-.scrollToTop:hover{
-  text-decoration:none;
-}
-
-///
-
-pre{
-  width: auto ;
-  overflow: auto ;
-}
-//
-// .main
-//
-
-.posts > .post {
-  padding-bottom: 2em;
-  border-bottom: 1px solid $lightGray;
-}
-
-.posts > .post:last-child {
-  padding-bottom: 1em;
-  border-bottom: none;
-}
-
-.post {
-  blockquote {
-    margin: 1.8em .8em;
-    border-left: 2px solid $gray;
-    padding: 0.1em 1em;
-    color: $gray;
-    font-size: 22px;
-    font-style: italic;
-  }
-
-  .comments {
-    margin-top: 10px;
-  }
-
-  .read-more {
-    text-transform: uppercase;
-    font-size: 15px;
-  }
-}
-
-.wrapper-footer {
-  margin-top: 50px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  background-color: $lightGray;
-}
 
 footer {
   padding: 20px 0;

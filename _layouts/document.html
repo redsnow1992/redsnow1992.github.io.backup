@@ -3,32 +3,12 @@ layout: default
 ---
 <script type="text/javascript">
   $(document).ready(function(){
-    $('.entry').toc();
-	
-		//Check to see if the window is top if not then display button
-		$(window).scroll(function(){
-			if ($(this).scrollTop() > 300) {
-				$('.scrollToTop').fadeIn();
-			} else {
-				$('.scrollToTop').fadeOut();
-			}
-		});
-		
-		//Click event to scroll to top
-		$('.scrollToTop').click(function(){
-			$('html, body').animate({scrollTop : 0}, 80);
-			return false;
-		});
-
+    $('.panel').toc();
   }) ;
 </script>
-<article class="post">
+<div class="panel">
   <h1>{{ page.title }}</h1>
-
-  <div class="entry">
-    {{ content }}
-  </div>
-  <a href="#" class="scrollToTop">Scroll To Top</a>
+  <p>{{ content }}</p>
 
   {% include disqus.html %}
-</article>
+</div>
