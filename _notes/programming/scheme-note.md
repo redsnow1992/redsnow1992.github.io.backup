@@ -1,6 +1,6 @@
 ---
 layout: document
-title: Scheme
+title: Scheme Note
 ---
 ### The concept of continuations  
 
@@ -18,10 +18,10 @@ Consider the simple examples below.
 {% highlight scheme %}
 (call/cc
   (lambda (k)
-(* 5 4)))      =>    20
+    (* 5 4)))      =>    20
 (call/cc
   (lambda (k)
-(* 5 (k 4))))  =>    4
+    (* 5 (k 4))))  =>    4
 {% endhighlight %}
 
 Here is a less trivial example, showing the use of `call/cc` to provide a nonlocal exit from a recursion.
@@ -37,6 +37,22 @@ Here is a less trivial example, showing the use of `call/cc` to provide a nonloc
             [(= (car ls) 0) (break 0)]
             [else (* (car ls) (f (cdr ls)))]))))))
 {% endhighlight %}
+
+Each of the continuation invocations above return to the continuation while control remains within the procedure passed to `call/cc`.
+
+~~~scheme
+(let ([x (call/cc (lambda (k) k))])
+  (x (lambda (ignore) "hi")))  => "hi"
+
+(let ([x (call/cc (lambda (k) k))])
+  (x (lambda (ignore) ignore)))  => #<procedure>
+~~~
+The continuation captured by this invocation of `call/cc` may be described as "Take the value, bind it to `x`, and apply the value of `x` to the value of `(lambda (ignore) "hi")`." Since `(lambda (k) k)` returns its argument, `x` is bound to the continuation itself; this continuation is applied to the procedure resulting from the evaluation of `(lambda (ignore) "hi")`.This has the effect of binding `x` (**again!**) to this procedure and applying the procedure to itself. The procedure ignores its argument and returns "hi".
+
+~~~scheme
+(((call/cc (lambda (k) k)) (lambda (x) x)) "HEY!") => "HEY!" 
+~~~
+The value of the `call/cc` is its own continuation, as in the preceding example. This is applied to the identity procedure `(lambda (x) x)`, so the `call/cc` returns a second time with this value. Then, the identity procedure is applied to itself, yielding the identity procedure.
 
 Consider the following definition of factorial that saves the continuation at the base of the recursion before returning 1, by assigning the top-level variable retry.
 

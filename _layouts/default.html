@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
   <head>
     <title>{% if page.title %}{{ page.title }} – {% endif %}{{ site.name }} – {{ site.description }}</title>
 
@@ -26,50 +26,51 @@
 
     <div class="off-canvas-wrap" data-offcanvas>
       <div class="inner-wrap">
-      	<nav class="tab-bar">
-      	  <section class="left-small">
-      	    <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
-      	  </section>
+        <nav class="tab-bar">
+          <section class="left-small">
+            <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+          </section>
 
-      	  <section class="middle tab-bar-section">
-      	    <h1 class="title">{{site.name}} {% if page.title %} - {{ page.title }} {% endif %}
+          <section class="middle tab-bar-section">
+            <h1 class="title">{{site.name}} {% if page.title %} - {{ page.title }} {% endif %}
             </h1>
-      	  </section>
+          </section>
 
-      	  <section class="right-small">
-      	    <a class="right-off-canvas-toggle menu-icon" href="#"><span></span></a>
-      	  </section>
-      	</nav>
+          <section class="right-small">
+            <a class="right-off-canvas-toggle menu-icon" href="#"><span></span></a>
+          </section>
+        </nav>
 
-      	<aside class="left-off-canvas-menu">
-      	  <ul class="off-canvas-list">
-      	    <li><label>Documents</label></li>
-      	    {% for note in site.notes %}
+        <aside class="left-off-canvas-menu">
+          <ul class="off-canvas-list">
+            <li><label>Documents</label></li>
+            {% for note in site.notes %}
             <li>
               <a href="{{ site.baseurl }}{{ note.url }}" title="{{ note.title }}">{{ note.title | truncate: 20}}
               </a>
             </li>
             {% endfor %}
-      	  </ul>
-      	</aside>
-	
-      	<aside class="right-off-canvas-menu">
-      	  <ul class="off-canvas-list">
-            <li><label>RSS</label></li>
-            <li><a href="http://songshuhui.net/feed">科学松鼠会</a></li>
-            <li><a href="http://www.techug.com/feed">外刊IT评论网</a></li>
-            <li><a href="http://www.jianshu.com/users/b1dd2b2c87a8/timeline">王垠</a></li>
-      	  </ul>
-      	</aside>
+          </ul>
+        </aside>
 
-      	<section class="main-section">
+        <aside class="right-off-canvas-menu">
+          <ul class="off-canvas-list">
+            <li><label>RSS</label></li>
+            <li><a href="http://songshuhui.net/feed" target="blank">科学松鼠会</a></li>
+            <li><a href="http://www.techug.com/feed"  target="blank">外刊IT评论网</a></li>
+            <li><a href="http://www.jianshu.com/users/b1dd2b2c87a8/timeline"  target="blank">王垠</a></li>
+          </ul>
+        </aside>
+
+        <section class="main-section">
           <div class="row">
             <div class="small-11 small-centered columns">
-      	     {{ content }}
+             {{ content }}
             </div>
           </div>
-      	</section>
-	      <a class="exit-offcanvas"></a>
+        </section>
+
+        <a class="exit-off-canvas"></a>
       </div>
     </div>
 
