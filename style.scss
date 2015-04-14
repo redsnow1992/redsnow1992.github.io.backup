@@ -61,15 +61,6 @@ p {
   margin: 15px 0;
 }
 
-a {
-  color: $blue;
-  text-decoration: none;
-	cursor: pointer;
-  &:hover, &:active {
-    color: $blue;
-  }
-}
-
 ul, ol {
   margin: 15px 0;
   padding-left: 30px;
@@ -203,37 +194,6 @@ img {
     margin: 3px 0;
   }
 }
-
-
-.doc-list{
-  float: left;
-  margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
-  font-size: 15px;
-  position: fixed ;
-
-  @include mobile {
-    float: none;
-    margin-top: 9px;
-    display: block;
-    font-size: 16px;
-    position: relative ;
-  }
-
-  a {
-    margin-left: 20px;
-    color: $darkGray;
-    text-align: right;
-    font-weight: 300;
-    letter-spacing: 1px;
-
-    @include mobile {
-      margin: 0 10px;
-      color: $blue;
-    }
-  }
-}
-
 
 /// toc
 #toc, .toc, .mw-warning {

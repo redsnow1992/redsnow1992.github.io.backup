@@ -10,35 +10,34 @@
     <![endif]-->
     <link rel="stylesheet" href="http://cdn.bootcss.com/foundation/5.5.1/css/normalize.min.css" />
     <link rel="stylesheet" href="http://cdn.bootcss.com/foundation/5.5.1/css/foundation.min.css" />
-    <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/vendor/modernizr.js"></script>
 
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
-    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
 
-    <script type="text/javascript" src="{{site.baseurl}}/js/jquery.toc.js">
-    </script>
-
+    <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/vendor/modernizr.js"></script>
   </head>
 
   <body>
+    <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/vendor/jquery.js"></script>
+    <script type="text/javascript" src="{{site.baseurl}}/js/jquery.toc.js">
+    </script>
     <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/vendor/fastclick.js"></script>
     <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/foundation.min.js"></script>
-    <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/foundation/foundation.magellan.min.js"></script>
 
     <div class="off-canvas-wrap" data-offcanvas>
       <div class="inner-wrap">
-      	<nav class="tab-bar" data-magellan-expedition="fixed">
+      	<nav class="tab-bar">
       	  <section class="left-small">
-      	    <a href="#" class="left-off-canvas-toggle menu-icon"><span></span></a>
+      	    <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
       	  </section>
 
       	  <section class="middle tab-bar-section">
-      	    <h1 class="title">{{site.name}}</h1>
+      	    <h1 class="title">{{site.name}} {% if page.title %} - {{ page.title }} {% endif %}
+            </h1>
       	  </section>
 
       	  <section class="right-small">
-      	    <a href="#" class="right-off-canvas-toggle menu-icon"><span></span></a>
+      	    <a class="right-off-canvas-toggle menu-icon" href="#"><span></span></a>
       	  </section>
       	</nav>
 
@@ -46,7 +45,10 @@
       	  <ul class="off-canvas-list">
       	    <li><label>Documents</label></li>
       	    {% for note in site.notes %}
-            <li><a href="{{ site.baseurl }}{{ note.url }}" title="{{ note.title }}">{{ note.title | truncate: 20}}</a></li>
+            <li>
+              <a href="{{ site.baseurl }}{{ note.url }}" title="{{ note.title }}">{{ note.title | truncate: 20}}
+              </a>
+            </li>
             {% endfor %}
       	  </ul>
       	</aside>
