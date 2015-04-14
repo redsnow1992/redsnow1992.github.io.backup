@@ -9,7 +9,7 @@ During the evaluation of a Scheme expression, the implementation must keep track
 1. what to evaluate 
 2. what to do with the value.   
 
-Scheme allows the continuation of any expression to be captured with the procedure `call/cc`. `call/cc` must be passed a procedure p of one argument. `call/cc` constructs a concrete representation of the current continuation and passes it to p. The continuation itself is represented by a procedure k. Each time k is applied to a value, it returns the value to the continuation of the `call/cc` application. This value becomes, in essence, the value of the application of `call/cc`.
+Scheme allows the **continuation of any expression** to be captured with the procedure `call/cc`. `call/cc` must be passed a procedure p of one argument. `call/cc` constructs a concrete representation of the current continuation and passes it to p. The continuation itself is represented by a procedure k. **Each time k is applied to a value, it returns the value to the continuation of the `call/cc` application**. This value becomes, in essence, the value of the application of `call/cc`.
 
 If p returns without invoking k, the value returned by the procedure
 becomes the value of the application of `call/cc`.
