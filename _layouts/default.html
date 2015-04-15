@@ -8,80 +8,67 @@
     <!--[if lt IE 9]>
       <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link rel="stylesheet" href="http://cdn.bootcss.com/foundation/5.5.1/css/normalize.min.css" />
-    <link rel="stylesheet" href="http://cdn.bootcss.com/foundation/5.5.1/css/foundation.min.css" />
+    <link rel="stylesheet" href="http://cdn.bootcss.com/uikit/2.18.0/css/uikit.min.css" />
+    <link rel="stylesheet" type="text/css" href="http://cdn.bootcss.com/uikit/2.18.0/css/components/sticky.min.css">
 
     <link rel="stylesheet" type="text/css" href="{{ site.baseurl }}/style.css" />
     <link rel="alternate" type="application/rss+xml" title="{{ site.name }} - {{ site.description }}" href="{{ site.baseurl }}/feed.xml" />
 
-    <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/vendor/modernizr.js"></script>
-  </head>
-
-  <body>
     <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/vendor/jquery.js"></script>
     <script type="text/javascript" src="{{site.baseurl}}/js/jquery.toc.js">
     </script>
-    <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/vendor/fastclick.js"></script>
-    <script type="text/javascript" src="http://cdn.bootcss.com/foundation/5.5.1/js/foundation.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/uikit/2.18.0/js/uikit.min.js"></script>
+    <script type="text/javascript" src="http://cdn.bootcss.com/uikit/2.18.0/js/components/sticky.min.js"></script>
+  </head>
 
-    <div class="off-canvas-wrap" data-offcanvas>
-      <div class="inner-wrap">
-        <nav class="tab-bar">
-          <section class="left-small">
-            <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
-          </section>
-
-          <section class="middle tab-bar-section">
-            <h1 class="title">{{site.name}} {% if page.title %} - {{ page.title }} {% endif %}
-            </h1>
-          </section>
-
-          <section class="right-small">
-            <a class="right-off-canvas-toggle menu-icon" href="#"><span></span></a>
-          </section>
-        </nav>
-
-        <aside class="left-off-canvas-menu">
-          <ul class="off-canvas-list">
-            <li><label>Documents</label></li>
-            {% for note in site.notes %}
-            <li>
-              <a href="{{ site.baseurl }}{{ note.url }}" title="{{ note.title }}">{{ note.title | truncate: 20}}
-              </a>
-            </li>
-            {% endfor %}
-          </ul>
-        </aside>
-
-        <aside class="right-off-canvas-menu">
-          <ul class="off-canvas-list">
-            <li><label>RSS</label></li>
-            <li><a href="http://songshuhui.net/feed" target="blank">科学松鼠会</a></li>
-            <li><a href="http://www.techug.com/feed"  target="blank">外刊IT评论网</a></li>
-            <li><a href="http://www.jianshu.com/users/b1dd2b2c87a8/timeline"  target="blank">王垠</a></li>
-          </ul>
-        </aside>
-
-        <section class="main-section">
-          <div class="row">
-            <div class="small-11 small-centered columns">
-             {{ content }}
+  <body>
+    <div class="uk-grid">
+      <div class="uk-width-1-1">
+        <div data-uk-sticky>
+          <nav class="uk-navbar">
+            <a href="#left-canvas" class="uk-navbar-toggle" data-uk-offcanvas></a>
+            <a href="#right-canvas" class="uk-navbar-toggle uk-navbar-flip" data-uk-offcanvas></a>
+            <div class="uk-navbar-content uk-navbar-center">
+              {{site.name}} {% if page.title %} - {{ page.title }} {% endif %}
             </div>
+          </nav>
+        </div>
+        <div id="left-canvas" class="uk-offcanvas">
+          <div class="uk-offcanvas-bar">
+            <ul class="uk-nav uk-nav-offcanvas">
+              <li class="uk-nav-header">Documents</li>
+              {% for note in site.notes %}
+              <li>
+                <a href="{{ site.baseurl }}{{ note.url }}" title="{{ note.title }}">{{ note.title | truncate: 20}}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
           </div>
-        </section>
+        </div>
 
-        <a class="exit-off-canvas"></a>
+        <div id="right-canvas" class="uk-offcanvas">
+          <div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
+            <ul class="uk-nav uk-nav-offcanvas">
+              <li class="uk-nav-header">RSS</li>
+              <li><a href="http://songshuhui.net/feed" target="blank">科学松鼠会</a></li>
+              <li><a href="http://www.techug.com/feed"  target="blank">外刊IT评论网</a></li>
+              <li><a href="http://www.jianshu.com/users/b1dd2b2c87a8/timeline"  target="blank">王垠</a></li>
+              <li><a href="#"><i class="uk-icon-rss"></i></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="uk-width-5-10 uk-container-center">
+          {{ content }}
+        </div>
+      </div>
+      <div class="uk-width-1-1">
+        <div class="uk-container-center uk-width-5-10">
+          {% include svg-icons.html %}
+        </div>
+
+        {% include analytics.html %}
       </div>
     </div>
-
-    <div class="small-4 small-centered columns">
-      {% include svg-icons.html %}
-    </div>
-
-    <script type="text/javascript">
-      $(document).foundation() ;
-    </script>
-
-    {% include analytics.html %}
   </body>
 </html>
