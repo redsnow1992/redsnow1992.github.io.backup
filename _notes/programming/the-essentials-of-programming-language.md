@@ -38,3 +38,41 @@ app-exp->rand           : Lc-exp → Lc-exp
 2. Include one predicate for each kind of data in the data type.
 3. Include one extractor for each piece of data passed to a constructor of the
 data type.
+
+**A Tool for define Recursive Data Types**
+
+~~~scheme
+(define-datatype lc-exp lc-exp?
+  (var-exp
+   (var identifier?))
+  (lambda-exp
+   (bound-var identifier?)
+   (body lc-exp?))
+  (app-exp
+   (rator lc-exp?)
+   (rand lc-exp?)))
+
+S-list ::= ({S-exp}*)
+S-exp  ::= Symbol | S-list
+
+(define-datatype s-list s-list?
+  (empty-s-list)
+  (non-empty-s-list
+   (first s-exp?)
+   (rest s-list?)))
+
+(define-datatype s-exp s-exp?
+  (symbol-s-exp
+   (sym symbol?))
+  (slst s-list?))
+
+~~~
+
+~~~scheme
+(define-datatype type-name type-predicate-name
+  {(variant-name {(field-name predicate)}*)}+)
+
+(cases type-name expression
+  {(variant-name ({field-name}*) consequent)}*
+  (else default))
+~~~
