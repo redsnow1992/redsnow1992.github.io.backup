@@ -51,9 +51,9 @@
           <div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
             <ul class="uk-nav uk-nav-offcanvas">
               <li class="uk-nav-header">RSS</li>
-              <li><a href="http://songshuhui.net/feed" target="blank">科学松鼠会</a></li>
-              <li><a href="http://www.techug.com/feed"  target="blank">外刊IT评论网</a></li>
-              <li><a href="http://www.jianshu.com/users/b1dd2b2c87a8/timeline"  target="blank">王垠</a></li>
+              {% for rss in site.data.rss %}
+                <li><a href="{{ rss.link }}">{{ rss.name }}</a></li>
+              {% endfor %}
               <li><a href="#"><i class="uk-icon-rss"></i></a></li>
             </ul>
           </div>
