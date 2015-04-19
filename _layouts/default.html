@@ -54,7 +54,7 @@
               {% for rss in site.data.rss %}
                 <li><a href="{{ rss.link }}" target="blank">{{ rss.name }}</a></li>
               {% endfor %}
-              <li><a href="#"><i class="uk-icon-rss"></i></a></li>
+              <li><a href="{{ site.baseurl }}/feed.xml"><i class="uk-icon-rss"></i></a></li>
             </ul>
           </div>
         </div>
