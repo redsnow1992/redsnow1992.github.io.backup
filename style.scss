@@ -108,6 +108,12 @@ table {
   color: $gray;
 }
 
+.content {
+  width: 50% ;
+  @include mobile{
+    width: 98% ;
+  }
+}
 
 /// toc
 #toc, .toc, .mw-warning {
@@ -149,6 +155,8 @@ table {
   top: 10% ;
   position: fixed ;
   width: 19%; 
+  height: 80% ;
+  overflow: scroll ;
   @include mobile {
     float: none ;
     position: static ;
