@@ -25,3 +25,8 @@ left join tb_partner d on a.partner_id = d.id
 alter table table_name add column rank int(11) default 2
 alter table table_name modify column rank int(11) default 2 not null
 ~~~
+## Update
+~~~sql
+update tb_body_content_track set beian_status = 1
+where beian_status != 11
+~~~
