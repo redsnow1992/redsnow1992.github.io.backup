@@ -134,7 +134,7 @@ individually with a **dot, underscore, and the one-based index** of the element.
 
 ~~~scala
 val pair = (99, "Luftballons")
-println(pari._1)
+println(pair._1)
 ~~~
 We **cannot** use `pair(0)`, because a list's `apply` method always returns the
 same type, but each element of a tuple may be a different type: `_1` can have
@@ -1497,6 +1497,25 @@ def append[T](xs: List[T], ys: List[T]): List[T] =
   }
 ~~~
 
+# Stateful Objects
+In Scala, every var that is a non-private mem-
+ber of some object implicitly defines a getter and a setter method with it.
+For example, **if it appears in a class**, the `var` definition:
+
+~~~scala
+var hour = 12
+~~~
+generates a getter, "`hour`", and setter, "`hour_=`", in addition to a
+reassignable
+field. The field is always marked `private[this]` , which means it can be
+accessed only from the object that contains it.
+
+
+~~~scala
+type Action = () => Unit
+~~~
+This statement defines `Action` to be an alias of the type of procedure that
+takes an empty parameter list and return `Unit`.
 
 
 
