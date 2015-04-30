@@ -1517,6 +1517,12 @@ type Action = () => Unit
 This statement defines `Action` to be an alias of the type of procedure that
 takes an empty parameter list and return `Unit`.
 
+# Type Parameterization
+
+
+
+
+
 
 
 # Diff Languages
