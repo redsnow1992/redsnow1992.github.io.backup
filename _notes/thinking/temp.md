@@ -1,6 +1,6 @@
 ---
 layout: document
-title: It is a Test
+title: It is a draft
 ---
 + 大样本随机双盲对照实验
 + 
@@ -8,3 +8,5 @@ title: It is a Test
   2. 认真  （讲事实，讲逻辑，不轻信）
   3. 开放  （可证伪）
 + 现代化的愚蠢并不是无知，而是对各种思潮生吞活剥。
++ 一课经济学 －－ 不能以偏概全
++ 规矩      －－ 总有特例（强者）
