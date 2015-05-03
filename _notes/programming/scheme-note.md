@@ -111,8 +111,10 @@ The continuation bound to retry might be described as "Multiply the value by 1, 
 (retry 5)   =>            120
 ~~~
 
+
+
 | racket | ruby |
-| -- | -- |
+| --- | --- |
 | (string-append "rope" "twine" "yarn") | +, << |
 | (substring "corduroys" 0 4) | [0..4] |
 | (string-length "shoelace") | .length |
@@ -129,3 +131,11 @@ The continuation bound to retry might be described as "Multiply the value by 1, 
 |(string-normalize-spaces "  foo bar  baz \r\n\t") | |
 | (string-replace "foo bar baz" "bar" "blah") |  |
 | (~a 'south) => "south" | |
+| (andmap string? (list "a" "b" "c")) | |
+| (foldl (lambda (elem v)           (+ v (* elem elem)))         0         '(1 2 3)) | |
+| (cons "head" empty) |  |
+| (define greet  (lambda (#:hi [hi "Hello"] given #:last [surname "Smith"])    (string-append hi ", " given " " surname))) |  |
+| (define greet  (case-lambda    [(name) (string-append "Hello, " name)]    [(given surname) (string-append "Hello, " given " " surname)])) |  |
+| (quotient/remainder 13 3) |  |
+| (define-values (given surname) (split-name "Adam Smith")) |  |
+| (let-values ([(q r) (quotient/remainder 14 3)])    (list q r)) |  |
