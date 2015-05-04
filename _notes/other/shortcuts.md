@@ -1,6 +1,6 @@
 ---
 layout: document
-title: Emacs ShortCut
+title: ShortCut
 ---
 # Shortcuts
 [EmacsNewbieKeyReference](http://emacswiki.org/emacs/EmacsNewbieKeyReference)
@@ -11,4 +11,6 @@ title: Emacs ShortCut
 | go to end of the file | `M >` |
 | kill line to beginning | `M 0 C-k` |
 | save all open buffers | `C-x s` |
+
+`svn diff ^/ting/mainbody/trunk ^/ting/mainbody/branches/150429`
 

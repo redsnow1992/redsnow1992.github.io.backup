@@ -24,6 +24,10 @@ left join tb_partner d on a.partner_id = d.id
 ~~~sql
 alter table table_name add column rank int(11) default 2
 alter table table_name modify column rank int(11) default 2 not null
+
+index:
+alter table table_name add index(status)
+show index from ting_passport.tb_profile
 ~~~
 ## Update
 ~~~sql
