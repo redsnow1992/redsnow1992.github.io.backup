@@ -24,6 +24,10 @@ left join tb_partner d on a.partner_id = d.id
 ~~~sql
 alter table table_name add column rank int(11) default 2
 alter table table_name modify column rank int(11) default 2 not null
+alter table tb_copyright_content 
+            add column price_mode varchar(255) after right_type, 
+            add column minimum_price varchar(255) after right_type, 
+            add column divide_rate varchar(255) after right_type
 
 index:
 alter table table_name add index(status)
