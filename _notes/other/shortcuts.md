@@ -11,6 +11,10 @@ title: ShortCut
 | go to end of the file | `M >` |
 | kill line to beginning | `M 0 C-k` |
 | save all open buffers | `C-x s` |
+| compare tree with base version | `C-x v D` |
+| compare with base version | `C-x v =`|
+
+
 
 `svn diff ^/ting/mainbody/trunk ^/ting/mainbody/branches/150429`
 
