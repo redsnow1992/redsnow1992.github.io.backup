@@ -2,25 +2,23 @@
 layout: default
 ---
 <div class="uk-panel">
-  <ul class="uk-slidenav-position" data-uk-slideshow>
-    <ul class="uk-slideshow" style="height: 560px;">
-      <li>
-        <video width="800" height="600" autoplay loop muted controls>
-          <source src="/images/big_buck_bunny.mp4" type="video/mp4">
-        </video>
-      </li>
-      <li>
-        <img src="/images/jekyll-now-theme-screenshot.jpg" />
-      </li>
-    </ul>
-    <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-previous" data-uk-slideshow-item="previous"></a>
-    <a href="" class="uk-slidenav uk-slidenav-contrast uk-slidenav-next" data-uk-slideshow-item="next"></a>
-    <ul class="uk-dotnav uk-dotnav-contrast uk-position-bottom uk-flex-center">
-      <li data-uk-slideshow-item="0"><a href=""></a></li>
-      <li data-uk-slideshow-item="1"><a href=""></a></li>
-    </ul>
-  </ul>
   <div>
-    <img src="/images/kunfu.gif">
+    <div class="uk-width-1-1">
+      <nav class="uk-navbar">
+        <ul class="uk-navbar-nav">
+          <li class="uk-active"><a href="{{site.baseurl}}">Home</a></li>
+          {% for cate in site.my-categories %}
+            <li class="uk-parent" data-uk-dropdown>
+              <a href="{{site.baseurl}}/{{cate}}">{{ cate }}</a>
+              <ul class="uk-dropdown uk-dropdown-navbar">
+                <li><a href="#">tes</a></li>
+                <li><a href="#">tes</a></li>
+                <li><a href="#">tes</a></li>
+              </ul>
+            </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
   </div>
 </div>
