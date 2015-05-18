@@ -54,5 +54,6 @@ title: ShortCut
 
 
 
-`svn diff ^/ting/mainbody/trunk ^/ting/mainbody/branches/150429`
-`svn propget -R svn:ignore`
+`svn diff ^/ting/mainbody/trunk ^/ting/mainbody/branches/150429`     
+`svn propget -R svn:ignore`     
+`svn pedit svn:ignore .`
